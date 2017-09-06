@@ -13,7 +13,6 @@ tag[index.index].textContent=""
 task[index.index].setAttribute("style","text-decoration:line-through; text-decoration-color: red;")
 }
 
-
 class App extends Component {
 constructor(){
   super();
@@ -22,13 +21,25 @@ constructor(){
     newtask:null
   })
 }
-
+///////////////////////////////////////////
+// toggle(index){
+// let tag = document.querySelectorAll('.done')
+// let task = document.querySelectorAll('.task')
+// console.log(task[index.index])
+// tag[index.index].textContent=""
+// task[index.index].setAttribute("style","text-decoration:line-through; text-decoration-color: red;")
+// }
+///////////////////////////////////////////
+clearTask(){
+this.state.newtask=""
+}
+///////////////////////////////////////////
 newState(data){
 this.setState({
   tasks:data,
-  newtask:""
 })
 }
+///////////////////////////////////////////
 newTask(data){
 this.setState({
 newtask:data.target.value
@@ -36,7 +47,7 @@ newtask:data.target.value
 }
 ///////////////////////////////////////////
 componentDidMount(){
-axios.get('http://localhost:8000/api/task')
+axios.get('https://todo-1list.herokuapp.com/api/task')
 .then((data)=>{
   this.newState(data)
 })
@@ -47,8 +58,9 @@ axios.get('http://localhost:8000/api/task')
 /////////////////////////////////////////////
 commentCreate(data){
 data.preventDefault()
-axios.post('http://localhost:8000/api/task/create', {'data':this.state.newtask})
+axios.post('https://todo-1list.herokuapp.com/api/task/create', {'data':this.state.newtask})
 .then((data)=>{
+    this.refs.task.value = null
     this.componentDidMount()
 })
 .catch((error)=>{
@@ -59,8 +71,9 @@ axios.post('http://localhost:8000/api/task/create', {'data':this.state.newtask})
 commentDelete(data,index){
 toggle(index)
 setTimeout(()=>{
-axios.delete('http://localhost:8000/api/task/delete',{params: {'data':data}})
+axios.delete('https://todo-1list.herokuapp.com/api/task/delete',{params: {'data':data}})
     .then((data)=>{
+
     this.componentDidMount()
     })
     .catch((error)=>{
@@ -76,7 +89,7 @@ axios.delete('http://localhost:8000/api/task/delete',{params: {'data':data}})
     return (
       <div className="App">
       <form onSubmit={this.commentCreate.bind(this)}>
-        <input type="text"onChange={(e)=>{this.newTask(e)}}/>
+        <input ref='task' type="text" onChange={(e)=>{this.newTask(e)}}/>
         <input type="submit"/>
       </form>
           <Task   value={data} deleteFunc={this.commentDelete.bind(this)}  />

@@ -28,3 +28,9 @@ display: inline-block;
 .task{
 display: inline-block;
 }
+
+.complete
+{
+  text-decoration:line-through;
+  text-decoration-color: red;
+}

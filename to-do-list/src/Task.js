@@ -1,8 +1,9 @@
 import React from 'react';
 
 const Task=(props)=>{
+///////////////////////////////////////////
 const displayList = (data)=>{
-  if(data.value!==null){
+if(data.value!==null){
 return data.value.data.map((data,index)=>{
               return(
                   <div key={data.id} >
@@ -19,6 +20,7 @@ else{
 }
 
 }
+///////////////////////////////////////////
 return(
     <div>
       {displayList(props)}
@@ -27,4 +29,5 @@ return(
 
   )
 }
+
 export default Task;
